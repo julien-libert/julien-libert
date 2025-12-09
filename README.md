@@ -1,8 +1,8 @@
 - 👋 Hi, I’m @julien-libert
-- 👀 I’m interested in development
-- 🌱 I’m currently learning RabbitMQ
-- 💞️ I’m looking to collaborate on nothing particular
-- 📫 How to reach me: I let you find out
+- 👀 I’m interested in web development
+- 🌱 I’m currently learning everyday new stuff
+- 💞️ I’m looking to collaborate on useful things
+- 📫 How to reach me: I let you find out ;)
 
 <!---
 julien-libert/julien-libert is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
