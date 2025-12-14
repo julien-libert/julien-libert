@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Lead Dev & Innovation Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+
+        /* --- STYLES DE BASE (DARK MODE PAR DÉFAUT) --- */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .ai-gradient-text {
+            background: linear-gradient(135deg, #a78bfa 0%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .ai-border {
+            position: relative;
+        }
+        .ai-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 0.5rem;
+            padding: 2px;
+            background: linear-gradient(135deg, #6366f1, #10b981);
+            -webkit-mask:
+               linear-gradient(#fff 0 0) content-box,
+               linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* --- LIGHT MODE OVERRIDES (Activé via JS) --- */
+        body.light-mode {
+            background-color: #f3f4f6 !important; /* Gris clair fond */
+            color: #4b5563 !important; /* Gris texte */
+        }
+        body.light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border: 1px solid #e5e7eb !important; /* Bordure grise légère */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        }
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode h3,
+        body.light-mode h4,
+        body.light-mode .text-white {
+            color: #111827 !important; /* Noir profond */
+        }
+        body.light-mode .text-slate-200,
+        body.light-mode .text-slate-300,
+        body.light-mode .text-slate-400,
+        body.light-mode .text-slate-500 {
+            color: #4b5563 !important; /* Gris lisible */
+        }
+        body.light-mode .text-indigo-400 {
+            color: #4f46e5 !important; /* Indigo plus soutenu pour contraste */
+        }
+        body.light-mode .text-emerald-400 {
+            color: #059669 !important; /* Emerald plus sombre */
+        }
+        body.light-mode .bg-slate-800 {
+            background-color: #ffffff !important;
+            border-color: #e5e7eb !important;
+        }
+        body.light-mode .bg-slate-700 {
+            background-color: #e5e7eb !important; /* Fond barre progression */
+        }
+        body.light-mode .ai-gradient-text {
+            /* On garde le gradient mais on peut l'ajuster si besoin, ici ça passe bien */
+        }
+        /* Ajustement spécifique du badge OnParticipe en light mode */
+        body.light-mode .from-slate-800 {
+            --tw-gradient-from: #ffffff !important;
+            --tw-gradient-to: #f9fafb !important;
+            border-color: #e5e7eb !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* --- STYLES D'IMPRESSION (Toujours Clean White) --- */
+        @media print {
+            @page { margin: 0; size: auto; }
+            body {
+                background-color: white !important;
+                color: #1f2937 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 0 !important;
+            }
+            .glass-panel {
+                background: none !important;
+                border: 1px solid #e5e7eb !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                border-radius: 0 !important;
+                margin-bottom: 2rem !important;
+
+                /* AJOUT : Empêcher la coupure des blocs à l'impression */
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                display: block !important;
+            }
+            .text-white, .text-slate-200, .text-slate-300 { color: #111827 !important; }
+            .text-slate-400, .text-slate-500 { color: #4b5563 !important; }
+            .ai-gradient-text {
+                background: none !important;
+                -webkit-text-fill-color: #4f46e5 !important;
+                color: #4f46e5 !important;
+            }
+            .no-print { display: none !important; }
+            .max-w-5xl {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 1cm !important;
+            }
+            .bg-slate-700 { background-color: #e5e7eb !important; }
+            .bg-slate-800, .bg-slate-900 {
+                background-color: white !important;
+                border: 1px solid #e5e7eb !important;
+            }
+            a { text-decoration: none !important; color: #111827 !important; }
+            p, li { font-size: 0.9em !important; }
+            h1 { font-size: 2em !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-300 min-h-screen p-4 md:p-8 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+
+    <!-- BARRE D'OUTILS FLOTTANTE -->
+    <div class="fixed top-6 right-6 z-50 no-print flex items-center gap-3">
+
+        <!-- SWITCH DARK/LIGHT -->
+        <button onclick="toggleTheme()" id="theme-btn" class="w-10 h-10 rounded-full bg-slate-800/80 backdrop-blur text-yellow-400 border border-slate-700 hover:bg-slate-700 shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95" title="Changer de thème">
+            <i class="fas fa-sun text-lg" id="theme-icon"></i>
+        </button>
+
+        <!-- BOUTON IMPRIMER -->
+        <button onclick="window.print()" class="group flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 px-5 rounded-full shadow-lg transition-all duration-300 hover:shadow-indigo-500/30 transform hover:-translate-y-1 cursor-pointer">
+            <i class="fas fa-print"></i>
+            <span class="hidden sm:inline">Imprimer / PDF</span>
+        </button>
+    </div>
+
+    <div class="max-w-5xl mx-auto space-y-6">
+
+        <!-- Header Section -->
+        <header class="glass-panel rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+            <!-- Decorative blurred blob (Masqué à l'impression) -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600 rounded-full blur-[100px] opacity-20 -z-10 no-print"></div>
+
+            <!-- Avatar Placeholder : PHOTO -->
+            <div class="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full bg-slate-800 border-2 border-indigo-500/50 flex items-center justify-center overflow-hidden shadow-2xl relative">
+                <img src="https://media.licdn.com/dms/image/v2/C4E03AQG6UZKWbTFdZw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517678671519?e=1767225600&v=beta&t=E4OokBbHIqu12MJz7k7hYf6GDgUsC4spjw8LRweKrFM" alt="Julien Libert" class="w-full h-full object-cover">
+            </div>
+
+            <div class="flex-1 text-center md:text-left space-y-3">
+                <div class="flex flex-col md:flex-row items-center md:items-baseline gap-3 justify-center md:justify-start">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white">Julien LIBERT</h1>
+                    <h2 class="text-xl md:text-2xl font-semibold ai-gradient-text">Chef de projet IA</h2>
+                </div>
+                <!-- Titre -->
+                <!-- Texte avec contraste réduit -->
+                <p class="text-slate-500 max-w-2xl text- leading-relaxed">
+                    J'aime la bidouille, je construis des ponts entre la tech et le métier, et je transmets le savoir. Bilingue, curieux et transversal, je cherche à simplifier la vie des utilisateurs.
+                </p>
+
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-2 text-sm">
+                    <a href="#" class="flex items-center gap-2 hover:text-white transition-colors"><i class="fas fa-envelope text-indigo-400"></i> julien.libert@gmail.com</a>
+                    <a href="#" class="flex items-center gap-2 hover:text-white transition-colors"><i class="fas fa-phone text-indigo-400"></i> 06 56 88 74 83</a>
+                    <span class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-indigo-400"></i> Besse sur Issole</span>
+                    <a href="#" class="flex items-center gap-2 hover:text-white transition-colors"><i class="fab fa-linkedin text-indigo-400"></i> LinkedIn</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Left Column: Skills & Stack -->
+            <aside class="space-y-6">
+                <!-- AI & Innovation Block -->
+                <div class="glass-panel rounded-2xl p-6 ai-border">
+                    <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-microchip text-emerald-400"></i> IA & Veille
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check mt-1 text-emerald-500"></i>
+                            <div>
+                                <strong class="text-slate-200">Usage Quotidien :</strong>
+                                <span class="block text-slate-400">Création d'agents IA pour le Dev (US, Code review), automatisation de taches, aide à la réflexion, connexion aux divers outils.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check mt-1 text-emerald-500"></i>
+                            <div>
+                                <strong class="text-slate-200">Projets Perso :</strong>
+                                <span class="block text-slate-400">Générateur vocal personnalisé (Père Noël pour enfants), scripts d'automatisation.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check mt-1 text-emerald-500"></i>
+                            <div>
+                                <strong class="text-slate-200">Veille Active :</strong>
+                                <span class="block text-slate-400">Suivi des acteurs majeurs (OpenAI, Anthropic) et implémentation rapide des nouveautés.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Soft Skills -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-heart text-indigo-400"></i> Points forts
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs">Curiosité</span>
+                        <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs">Vulgarisation Tech</span>
+                        <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs">Pédagogie</span>
+                        <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs">Influence interne</span>
+                        <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs">Relationnel facile</span>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-globe text-indigo-400"></i> Langues
+                    </h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-200">Français</span>
+                                <span class="text-slate-400">Natif</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-500 w-full"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-200">Anglais (C2)</span>
+
+                            </div>
+                            <div class="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 w-[80%]"></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">À l'aise en contexte pro ou technique. Excellents résultats au TOEIC.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Conférences -->
+                 <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-microphone-lines text-indigo-400"></i> Speaker
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-3">Interventions devant 100 à 300 personnes.</p>
+                    <ul class="text-sm space-y-2 text-slate-300">
+                        <li>• Sunny Tech (Montpellier)</li>
+                        <li>• DevFest (Dijon)</li>
+                        <li>• Codeurs en Seine (Rouen)</li>
+                        <li>• Azur Tech Summer (Antibes)</li>
+                        <li>• Dev Quest (Niort)</li>
+                    </ul>
+                    <div class="mt-3 pt-3 border-t border-slate-700 text-xs text-slate-400">
+                        <strong>Sujets :</strong> Mob programming, "Le S de SOLID", Architecture logicielle.
+                    </div>
+                </div>
+
+                <!-- Formation (Ajout) -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-indigo-400"></i> Formation
+                    </h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="relative pl-4 border-l-2 border-slate-700">
+                            <div class="font-semibold text-slate-200">Maîtrise Informatique</div>
+                            <div class="text-xs text-slate-500">2002 • Université Toulon</div>
+                        </li>
+                        <li class="relative pl-4 border-l-2 border-slate-700">
+                            <div class="font-semibold text-slate-200">DUT GEII</div>
+                            <div class="text-xs text-slate-500">2000 • Informatique Industrielle</div>
+                        </li>
+                        <li class="relative pl-4 border-l-2 border-indigo-500/50">
+                            <div class="font-semibold text-indigo-300">Cursus Anglais : Admissible CAPES</div>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </aside>
+
+            <!-- Right Column: Experience -->
+            <main class="md:col-span-2 space-y-4">
+
+                <!-- Expérience 1: Evoliz -->
+                <div class="glass-panel rounded-2xl p-5 md:p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-3">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Lead Developer & Projets Transverses</h3>
+                            <div class="text-indigo-400 font-medium text-sm">Evoliz • SaaS Facturation</div>
+                        </div>
+                        <div class="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded-full mt-2 md:mt-0">
+                            2017 – Aujourd'hui
+                        </div>
+                    </div>
+
+                    <p class="text-slate-300 text-sm mb-4 italic">
+                        Pivot entre la technique et le produit. Apprécié pour ma vision globale des projets et ma capacité à traduire le besoin métier en solutions techniques robustes et efficaces.
+                    </p>
+
+                    <div class="space-y-4 relative border-l border-slate-700 ml-2 pl-6">
+                        <!-- Project 1 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-2 border-slate-900"></div>
+                            <h4 class="text-white font-bold mb-0.5 text-sm">Coordination & Management</h4>
+                            <p class="text-xs text-slate-400 mb-1">
+                                Gestion d'une équipe, mentoring direct de devs.
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-slate-300 space-y-0.5">
+                                <li>Recrutement et onboarding des nouveaux talents.</li>
+                                <li>Définition du besoin tech et arbitrage des choix architecturaux.</li>
+                                <li>Pratique intensive du Mob Programming pour la montée en compétence collective.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-900"></div>
+                            <h4 class="text-white font-bold mb-0.5 text-sm">Projets Transverses & Relations Partenaires</h4>
+                            <p class="text-xs text-slate-400 mb-1">
+                                Au coeur des échanges avec les différents partenaires
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-slate-300 space-y-0.5">
+                                <li><strong>Lead Tech sur les intégrations externes :</strong> Cadrage des besoins avec des partenaires majeurs (PayPal, Stripe, BRED) et spécialisés (Elcia).</li>
+                                <li><strong>Projet CRM :</strong> Participation clé à la migration et l'intégration Hubspot.</li>
+                                <li>Support technique avancé pour les équipes Sales et Customer Success.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-indigo-500 border-2 border-slate-900"></div>
+                            <h4 class="text-white font-bold mb-0.5 text-sm">Formation & Pédagogie Interne</h4>
+                            <p class="text-xs text-slate-400 mb-1">
+                                Transmettre pour rendre les équipes autonomes.
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-slate-300 space-y-0.5">
+                                <li>Animation de workshops (HTML/CSS) pour le support client et les CSM afin d'améliorer leur autonomie.</li>
+                                <li>Présentation de l'API Evoliz en live client pour les 10 ans de la boîte.</li>
+                                <li>Instauration d'une culture de veille et d'innovation (IA, bonnes pratiques).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expérience 2: Freelance -->
+                <div class="glass-panel rounded-2xl p-5 md:p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Développeur Indépendant</h3>
+                            <div class="text-indigo-400 font-medium text-sm">Freelance</div>
+                        </div>
+                        <div class="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded-full">
+                            Avant 2017
+                        </div>
+                    </div>
+
+                    <p class="text-slate-400 text-xs mb-3 italic">
+                        Une expérience fondatrice qui a forgé mon autonomie, ma gestion du stress et ma compréhension des enjeux business.
+                    </p>
+
+                    <!-- BLOC MAJEUR : ONPARTICIPE.COM -->
+                    <div class="mb-4 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-3 border border-indigo-500/30 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl -mr-10 -mt-10 pointer-events-none"></div>
+
+                        <h4 class="text-white font-bold text-sm mb-1 flex items-center gap-2">
+                            <i class="fas fa-trophy text-yellow-400 text-xs"></i>
+                            <span class="text-indigo-100">Réalisation Majeure :</span>
+                            <a href="https://www.onparticipe.fr" target="_blank" class="text-white hover:text-indigo-300 underline underline-offset-4 decoration-indigo-500/50 transition-colors">OnParticipe.fr</a>
+                        </h4>
+
+                        <p class="text-slate-300 text-xs mb-2">
+                            Conception et développement intégral (Zero to One) de la plateforme de cagnottes en ligne.
+                        </p>
+
+                        <ul class="text-[10px] text-slate-400 space-y-1 list-none ml-1">
+                            <li class="flex items-start gap-1.5">
+                                <i class="fas fa-angle-right text-indigo-500 mt-0.5"></i>
+                                <span><strong>Product Owner :</strong> Traduction du besoin client complexe en un produit final simple et intuitif.</span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <i class="fas fa-angle-right text-indigo-500 mt-0.5"></i>
+                                <span><strong>Intégration Fintech :</strong> Pilotage complet de la relation technique avec le partenaire financier <em>LemonWay</em>.</span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <i class="fas fa-angle-right text-indigo-500 mt-0.5"></i>
+                                <span><strong>Tech :</strong> Architecture robuste (Laravel) pour gérer les flux financiers sécurisés à fort trafic.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="list-disc list-inside text-xs text-slate-300 space-y-1">
+                        <li><strong>Gestion de projet 360° :</strong> De la prise de besoin et devis jusqu'à la mise en production.</li>
+                        <li><strong>Diversité des réalisations :</strong> Sites E-commerce, applications web sur-mesure pour TPE/PME.</li>
+                        <li><strong>Agilité terrain :</strong> Adaptation aux contraintes budgétaires variées.</li>
+                    </ul>
+                </div>
+
+                <!-- Expériences Précédentes (Ultra Linear) -->
+                <div class="glass-panel rounded-xl p-3">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <i class="fas fa-history"></i> Expériences Précédentes
+                    </h3>
+
+                    <div class="flex flex-col gap-1.5">
+                        <!-- Ligne 1 -->
+                        <div class="flex justify-between items-baseline text-xs">
+                            <div>
+                                <span class="font-bold text-slate-200">Responsable IT & Dev</span>
+                                <span class="text-indigo-400 mx-1">•</span>
+                                <span class="text-slate-400">QuickPrint (8 agences en Rhones Alpes)</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">2009-2013</span>
+                        </div>
+                        <!-- Ligne 2 -->
+                        <div class="flex justify-between items-baseline text-xs">
+                            <div>
+                                <span class="font-bold text-slate-200">Formateur Interne</span>
+                                <span class="text-indigo-400 mx-1">•</span>
+                                <span class="text-slate-400">CPAM</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">2009</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer / AI Badge -->
+                <div class="mt-6 pt-4 border-t border-slate-800/50 flex justify-center pb-6">
+                    <div class="relative group cursor-default">
+                        <!-- Effet de glow au survol -->
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full blur opacity-25 group-hover:opacity-60 transition duration-500"></div>
+
+                        <!-- Badge content -->
+                        <div class="relative flex items-center gap-2 px-3 py-1.5 bg-slate-900 rounded-full border border-slate-700/50 leading-none shadow-xl">
+                            <i class="fas fa-robot text-indigo-400 text-[10px]"></i>
+                            <span class="text-[9px] uppercase tracking-widest font-semibold text-slate-400 group-hover:text-slate-200 transition-colors p-2">
+                                Made with AI assistance
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE BASCULE DARK/LIGHT MODE -->
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const btn = document.getElementById('theme-btn');
+
+            body.classList.toggle('light-mode');
+
+            if (body.classList.contains('light-mode')) {
+                // Passage en mode clair : on affiche la lune pour revenir au sombre
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                // Ajustement visuel du bouton pour le mode clair
+                btn.classList.remove('text-yellow-400');
+                btn.classList.add('text-slate-600', 'bg-white', 'border-gray-200');
+                btn.classList.remove('bg-slate-800/80', 'border-slate-700');
+            } else {
+                // Retour en mode sombre : on affiche le soleil
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                // Reset du bouton
+                btn.classList.add('text-yellow-400', 'bg-slate-800/80', 'border-slate-700');
+                btn.classList.remove('text-slate-600', 'bg-white', 'border-gray-200');
+            }
+        }
+    </script>
+</body>
+</html>
