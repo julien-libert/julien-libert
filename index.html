@@ -89,26 +89,43 @@
 
         /* --- STYLES D'IMPRESSION (Toujours Clean White) --- */
         @media print {
-            @page { margin: 0; size: auto; }
+            @page { margin: 1.5cm 0.5cm 0.5cm 0.5cm; size: A4; }
             body {
                 background-color: white !important;
                 color: #1f2937 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 padding: 0 !important;
+                transform: scale(0.9);
+                transform-origin: top left;
+            }
+            /* Compenser la marge haute sur la première page */
+            .max-w-5xl {
+                margin-top: -1cm !important;
             }
             .glass-panel {
                 background: none !important;
-                border: 1px solid #e5e7eb !important;
+                border: none !important;
                 box-shadow: none !important;
                 backdrop-filter: none !important;
                 border-radius: 0 !important;
-                margin-bottom: 2rem !important;
+                margin-bottom: 1rem !important;
 
                 /* AJOUT : Empêcher la coupure des blocs à l'impression */
                 break-inside: avoid !important;
                 page-break-inside: avoid !important;
                 display: block !important;
+            }
+            /* Bordures arrondies pour les blocs de la colonne droite */
+            main .glass-panel {
+                border: 1px solid #e5e7eb !important;
+                border-radius: 0.75rem !important;
+                padding: 1rem !important;
+            }
+            /* Bordures arrondies pour les blocs de la colonne gauche */
+            aside .glass-panel {
+                border: 1px solid #e5e7eb !important;
+                border-radius: 0.75rem !important;
             }
             .text-white, .text-slate-200, .text-slate-300 { color: #111827 !important; }
             .text-slate-400, .text-slate-500 { color: #4b5563 !important; }
@@ -118,19 +135,80 @@
                 color: #4f46e5 !important;
             }
             .no-print { display: none !important; }
+            .ai-border::before {
+                display: none !important;
+            }
+            .ai-border {
+                border: none !important;
+            }
             .max-w-5xl {
                 max-width: 100% !important;
                 margin: 0 !important;
-                padding: 1cm !important;
+                padding: 0.5cm !important;
             }
             .bg-slate-700 { background-color: #e5e7eb !important; }
             .bg-slate-800, .bg-slate-900 {
                 background-color: white !important;
-                border: 1px solid #e5e7eb !important;
+                border: none !important;
+            }
+            .bg-gradient-to-r {
+                background: none !important;
+                border: 1px solid #c7d2fe !important;
+                border-radius: 0.5rem !important;
             }
             a { text-decoration: none !important; color: #111827 !important; }
             p, li { font-size: 0.9em !important; }
             h1 { font-size: 2em !important; }
+            /* Fix header layout for print */
+            header.glass-panel {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 2rem !important;
+            }
+            header .shrink-0 {
+                width: 100px !important;
+                height: 100px !important;
+                flex-shrink: 0 !important;
+            }
+            header .flex-1 {
+                text-align: left !important;
+            }
+            header .flex-1 > div:first-child {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: baseline !important;
+                justify-content: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            header .flex-wrap {
+                justify-content: flex-start !important;
+            }
+            .grid {
+                display: grid !important;
+                grid-template-columns: 1fr 2fr !important;
+            }
+            /* Réduire les paddings pour gagner de l'espace */
+            .glass-panel {
+                padding: 0.75rem !important;
+            }
+            aside .glass-panel {
+                margin-bottom: 0.5rem !important;
+            }
+            aside h3 {
+                margin-bottom: 0.5rem !important;
+                font-size: 0.9rem !important;
+            }
+            aside .space-y-3 {
+                gap: 0.5rem !important;
+            }
+            /* Réduire spécifiquement le bloc Points forts */
+            aside .flex-wrap {
+                gap: 0.25rem !important;
+            }
+            aside .flex-wrap span {
+                padding: 0.15rem 0.5rem !important;
+            }
         }
     </style>
 </head>
